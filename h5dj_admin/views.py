@@ -8,19 +8,19 @@ import django.contrib.auth.models
 import models
 
 
-def check_user(user):
-    if user is not None and user.is_active and user.is_authenticated():
-            return True
+def login_required(func):
+    def _deco(request):
+        user = request.user
+        if user is not None and user.is_active and user.is_authenticated():
+            return func(request)
+        else:
+            return render_to_response('login.html')
+    return _deco
 
-    return False
 
-
+@login_required
 def index(request):
-    user = request.user
-    if check_user(user):
-        return render_to_response('index.html')
-
-    return render_to_response('login.html')
+    return render_to_response('index.html')
 
 
 def authenticate(request):
