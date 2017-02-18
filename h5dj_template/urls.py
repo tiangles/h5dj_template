@@ -24,8 +24,11 @@ router.register(r'statistics', h5dj_admin.views.StatisticsViewSet)
 
 
 urlpatterns = [
+    url(r'^$', h5dj_admin.views.dashboard, name='index'),
+    url(r'^dashboard$', h5dj_admin.views.dashboard, name='dashboard'),
+    url(r'^inbox$', h5dj_admin.views.inbox, name='inbox'),
+    url(r'^grids$', h5dj_admin.views.grids, name='grids'),
     url(r'^authenticate$', h5dj_admin.views.authenticate, name='authenticate'),
     url(r'^sign-out$', h5dj_admin.views.sign_out, name='sign_out'),
-    url(r'^$', h5dj_admin.views.index, name='index'),
     url(r'^api/', include(router.urls)),
 ]

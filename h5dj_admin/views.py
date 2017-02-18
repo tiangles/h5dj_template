@@ -19,8 +19,18 @@ def login_required(func):
 
 
 @login_required
-def index(request):
+def dashboard(request):
     return render_to_response('index.html')
+
+
+@login_required
+def grids(request):
+    return render_to_response('grids.html')
+
+
+@login_required
+def inbox(request):
+    return render_to_response('inbox.html')
 
 
 def authenticate(request):
