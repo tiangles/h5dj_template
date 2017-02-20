@@ -21,6 +21,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'users', h5dj_admin.views.UserViewSet)
 router.register(r'statistics', h5dj_admin.views.StatisticsViewSet)
+router.register(r'inbox', h5dj_admin.views.EmailInboxViewSet)
 
 
 urlpatterns = [

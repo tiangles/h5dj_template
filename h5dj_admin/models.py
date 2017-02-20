@@ -1,4 +1,5 @@
 from django.db import models
+import django.contrib.auth.models
 
 
 # class Admin(models.Model):
@@ -24,4 +25,21 @@ class Statistics(models.Model):
     profit_today = models.IntegerField()
 
     class Meta:
-        db_table = "site_statistics"
+        db_table = "admin_site_statistics"
+
+
+class EmailEntity(models.Model):
+    user = models.ForeignKey(django.contrib.auth.models.User, related_name='email_owner')
+    #MIME header
+    mime_from = models.EmailField(max_length=128)
+    mime_to = models.CharField(max_length=128)
+    mime_cc = models.CharField(max_length=128)
+    mime_bcc = models.CharField(max_length=128)
+    mime_date = models.DateTimeField()
+    mime_subject = models.CharField(max_length=128)
+    mime_transfer_encoding = models.CharField(max_length=8)
+    #MIME content
+    content_type = models.CharField(max_length=8)
+
+    class Meta:
+        db_table = "admin_email_inbox"

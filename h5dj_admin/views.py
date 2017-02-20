@@ -68,3 +68,8 @@ class UserViewSet(rest_framework.viewsets.ModelViewSet):
 class StatisticsViewSet(rest_framework.viewsets.ModelViewSet):
     queryset = models.Statistics.objects.all()
     serializer_class = serializers.StatisticsSerializer
+
+
+class EmailInboxViewSet(rest_framework.viewsets.ModelViewSet):
+    queryset = models.EmailEntity.objects.all()
+    serializer_class = serializers.EmailEntitySerializer
