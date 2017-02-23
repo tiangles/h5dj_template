@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 import django.contrib.auth
 import rest_framework.viewsets
+import rest_framework.generics
 import serializers
 import django.contrib.auth.models
 import models
@@ -70,6 +71,7 @@ class StatisticsViewSet(rest_framework.viewsets.ModelViewSet):
     serializer_class = serializers.StatisticsSerializer
 
 
+# class EmailInboxViewSet(rest_framework.generics.RetrieveUpdateDestroyAPIView):
 class EmailInboxViewSet(rest_framework.viewsets.ModelViewSet):
     queryset = models.EmailEntity.objects.all()
     serializer_class = serializers.EmailEntitySerializer

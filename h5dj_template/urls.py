@@ -21,8 +21,12 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'users', h5dj_admin.views.UserViewSet)
 router.register(r'statistics', h5dj_admin.views.StatisticsViewSet)
-router.register(r'inbox', h5dj_admin.views.EmailInboxViewSet)
+# router.register(r'inbox', h5dj_admin.views.EmailInboxViewSet)
 
+inbox_list = h5dj_admin.views.EmailInboxViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
 
 urlpatterns = [
     url(r'^$', h5dj_admin.views.dashboard, name='index'),
@@ -31,5 +35,6 @@ urlpatterns = [
     url(r'^grids$', h5dj_admin.views.grids, name='grids'),
     url(r'^authenticate$', h5dj_admin.views.authenticate, name='authenticate'),
     url(r'^sign-out$', h5dj_admin.views.sign_out, name='sign_out'),
+    url(r'^api/inbox', inbox_list, name='inbox_list'),
     url(r'^api/', include(router.urls)),
 ]

@@ -143,7 +143,7 @@
 			                </li>
 			                <li class="divider"></li>
 			                <li>
-			                    <a href="#" class="font-red" title="">
+			                    <a id="del_email" href="#" class="font-red" title="">
 			                        <i class="fa fa-times" icon_9=""></i>
 			                        Delete
 			                    </a>
@@ -230,7 +230,28 @@ $(document).ready(function() {
         },
         "json"
     );
+
+    $("#del_email").click(function(){
+        var delCount = 0;
+        $("#inbox").find("tr").each(function(){
+            var tdArr = $(this).children();
+            var del = tdArr.eq(0).find('input:checked').val();
+            if(del){
+                delCount++;
+            }
+        });
+        $.ajax({
+            url:"/api/inbox",
+            type:"DELETE",
+            data:{"id":0},
+            dataType:"json",
+            success:function(){
+                alert("deleted");
+            },
+        });
+    });
 });
+
 
 
 </script>

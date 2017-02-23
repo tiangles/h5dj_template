@@ -41,5 +41,8 @@ class EmailEntity(models.Model):
     #MIME content
     content_type = models.CharField(max_length=8)
 
+    #local status
+    readed = models.BooleanField()
+
     class Meta:
         db_table = "admin_email_inbox"
