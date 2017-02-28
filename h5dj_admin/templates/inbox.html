@@ -241,9 +241,8 @@ $(document).ready(function() {
             }
         });
         $.ajax({
-            url:"/api/inbox",
+            url:"/api/inbox/1",
             type:"DELETE",
-            data:{"id":0},
             dataType:"json",
             success:function(){
                 alert("deleted");

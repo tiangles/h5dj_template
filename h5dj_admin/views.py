@@ -4,6 +4,7 @@ from django.template import RequestContext
 import django.contrib.auth
 import rest_framework.viewsets
 import rest_framework.generics
+import rest_framework.permissions
 import serializers
 import django.contrib.auth.models
 import models
@@ -16,6 +17,7 @@ def login_required(func):
             return func(request)
         else:
             return render_to_response('login.html')
+
     return _deco
 
 
@@ -71,7 +73,10 @@ class StatisticsViewSet(rest_framework.viewsets.ModelViewSet):
     serializer_class = serializers.StatisticsSerializer
 
 
-# class EmailInboxViewSet(rest_framework.generics.RetrieveUpdateDestroyAPIView):
 class EmailInboxViewSet(rest_framework.viewsets.ModelViewSet):
     queryset = models.EmailEntity.objects.all()
     serializer_class = serializers.EmailEntitySerializer
+    permission_classes = (rest_framework.permissions.AllowAny,)
+
+    def perform_authentication(self, request):
+        pass
