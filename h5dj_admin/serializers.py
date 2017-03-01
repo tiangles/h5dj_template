@@ -18,4 +18,4 @@ class StatisticsSerializer(serializers.HyperlinkedModelSerializer):
 class EmailEntitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.EmailEntity
-        fields = ('mime_from', 'mime_date', 'mime_subject')
+        fields = ('id', 'mime_from', 'mime_date', 'mime_subject')

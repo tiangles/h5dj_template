@@ -185,14 +185,13 @@
                                 <a class="btn btn-default"><i class="fa fa-angle-left"></i></a>
                                 <a class="btn btn-default"><i class="fa fa-angle-right"></i></a>
                             </div>
-
-
 			    </div>
                </div>
                 <table class="table">
                     <tbody id="inbox" >
                    </tbody>
                 </table>
+                <div id="error_msg" class="bg-danger hidden">error</div>
                </div>
             </div>
             <div class="clearfix"> </div>
@@ -212,12 +211,16 @@ function generateInboxItem(entity, table){
     col.push("<td></td>");
     col.push("<td>" + entity.mime_date + "</td>");
 
-    var row = "<tr class=\"unread checked\">";
+    var row = "<tr class=\"unread checked\", eid=\"" + entity.id + "\">";
     for(var c in col){
         row = row + col[c];
     }
     row += "</tr>";
     table.append(row);
+}
+
+function strToJson(str){
+    return (new Function("return " + str))();
 }
 
 $(document).ready(function() {
@@ -232,21 +235,26 @@ $(document).ready(function() {
     );
 
     $("#del_email").click(function(){
-        var delCount = 0;
         $("#inbox").find("tr").each(function(){
-            var tdArr = $(this).children();
+            var row = $(this);
+            var tdArr = row.children();
             var del = tdArr.eq(0).find('input:checked').val();
             if(del){
-                delCount++;
+                var eid = row.attr("eid");
+                $.ajax({
+                    url:"/api/inbox/" + eid,
+                    type:"DELETE",
+                    dataType:"json",
+                    success:function(data, textStatus){
+                       $("#error_msg").removeClass("show").addClass("hidden");
+                       row.remove();
+                    },
+                    error: function(responseXML, textStatus, errorThrown){
+                        var error_msg = "Delete error: " + strToJson(responseXML.responseText).detail;
+                        $("#error_msg").removeClass("hidden").addClass("show").text(error_msg);
+                    },
+                });
             }
-        });
-        $.ajax({
-            url:"/api/inbox/1",
-            type:"DELETE",
-            dataType:"json",
-            success:function(){
-                alert("deleted");
-            },
         });
     });
 });
